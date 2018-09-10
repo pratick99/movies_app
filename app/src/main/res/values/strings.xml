@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">Movies App</string>
+    <string name="app_name">Movies</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="movie_image">Movie Image</string>
+    <string name="api_key">c948b84bfc921249fca1312ae756d3de</string>
 </resources>
