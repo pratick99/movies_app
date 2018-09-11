@@ -1,6 +1,7 @@
 package com.pratik.moviesapp.adapters;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,8 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         final Results results = movies.get(position);
         if((results != null)) {
-            holder.movieName.setText(results.getOriginal_title());
+            //holder.movieName.setText(results.getOriginal_title());
+            //
         }
     }
 
@@ -48,11 +50,8 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.movie_image)
-        public ImageView movieImage;
-
-        @BindView(R.id.movie_name)
-        public TextView movieName;
+        @BindView(R.id.movie_each_item)
+        CardView eachMovie;
 
         MovieViewHolder(View itemView) {
             super(itemView);
