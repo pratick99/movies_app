@@ -9,6 +9,7 @@ import com.pratik.moviesapp.models.Results;
 import com.pratik.moviesapp.rest.MoviesEndPoints;
 import com.pratik.moviesapp.rest.RetrofitInstance;
 
+import java.util.Collections;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -20,7 +21,6 @@ public class MovieController {
 
     private static final String TAG = MovieController.class.getSimpleName();
     private static final String API_KEY ="c948b84bfc921249fca1312ae756d3de";
-    private Movie popularMovies;
     private static MovieController movieController =null;
 
     private MovieController() {
@@ -43,7 +43,7 @@ public class MovieController {
             @Override
             public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
                 if (response.body() != null && call.isExecuted()) {
-                    callBack.onSuccess(response.body() != null ? response.body() : null);
+                    callBack.onSuccess(Objects.requireNonNull(response.body()));
                 }
             }
 
