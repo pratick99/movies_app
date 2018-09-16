@@ -1,12 +1,15 @@
 package com.pratik.moviesapp.models;
 
-public class Results {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Results implements Parcelable {
 
     private String vote_average;
 
     private String backdrop_path;
 
-    private String adult;
+    private boolean adult;
 
     private String id;
 
@@ -16,7 +19,7 @@ public class Results {
 
     private String original_language;
 
-    private String[] genre_ids;
+    private int[] genre_ids;
 
     private String release_date;
 
@@ -29,6 +32,35 @@ public class Results {
     private String video;
 
     private String popularity;
+
+    protected Results(Parcel in) {
+        vote_average = in.readString();
+        backdrop_path = in.readString();
+        adult = in.readByte() != 0;
+        id = in.readString();
+        title = in.readString();
+        overview = in.readString();
+        original_language = in.readString();
+        genre_ids = in.createIntArray();
+        release_date = in.readString();
+        original_title = in.readString();
+        vote_count = in.readString();
+        poster_path = in.readString();
+        video = in.readString();
+        popularity = in.readString();
+    }
+
+    public static final Creator<Results> CREATOR = new Creator<Results>() {
+        @Override
+        public Results createFromParcel(Parcel in) {
+            return new Results(in);
+        }
+
+        @Override
+        public Results[] newArray(int size) {
+            return new Results[size];
+        }
+    };
 
     public String getVote_average ()
     {
@@ -48,16 +80,6 @@ public class Results {
     public void setBackdrop_path (String backdrop_path)
     {
         this.backdrop_path = backdrop_path;
-    }
-
-    public String getAdult ()
-    {
-        return adult;
-    }
-
-    public void setAdult (String adult)
-    {
-        this.adult = adult;
     }
 
     public String getId ()
@@ -98,16 +120,6 @@ public class Results {
     public void setOriginal_language (String original_language)
     {
         this.original_language = original_language;
-    }
-
-    public String[] getGenre_ids ()
-    {
-        return genre_ids;
-    }
-
-    public void setGenre_ids (String[] genre_ids)
-    {
-        this.genre_ids = genre_ids;
     }
 
     public String getRelease_date ()
@@ -170,9 +182,48 @@ public class Results {
         this.popularity = popularity;
     }
 
+    public boolean isAdult() {
+        return adult;
+    }
+
+    public int[] getGenre_ids() {
+        return genre_ids;
+    }
+
     @Override
     public String toString()
     {
         return "ClassPojo [vote_average = "+vote_average+", backdrop_path = "+backdrop_path+", adult = "+adult+", id = "+id+", title = "+title+", overview = "+overview+", original_language = "+original_language+", genre_ids = "+genre_ids+", release_date = "+release_date+", original_title = "+original_title+", vote_count = "+vote_count+", poster_path = "+poster_path+", video = "+video+", popularity = "+popularity+"]";
+    }
+
+    public void setAdult(boolean adult) {
+        this.adult = adult;
+    }
+
+    public void setGenre_ids(int[] genre_ids) {
+        this.genre_ids = genre_ids;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(vote_average);
+        parcel.writeString(backdrop_path);
+        parcel.writeByte((byte) (adult ? 1 : 0));
+        parcel.writeString(id);
+        parcel.writeString(title);
+        parcel.writeString(overview);
+        parcel.writeString(original_language);
+        parcel.writeIntArray(genre_ids);
+        parcel.writeString(release_date);
+        parcel.writeString(original_title);
+        parcel.writeString(vote_count);
+        parcel.writeString(poster_path);
+        parcel.writeString(video);
+        parcel.writeString(popularity);
     }
 }

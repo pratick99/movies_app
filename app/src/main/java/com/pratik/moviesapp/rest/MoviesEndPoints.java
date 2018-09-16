@@ -11,5 +11,8 @@ public interface MoviesEndPoints {
 
 
     @GET("movie/popular")
-    Call<Movie> popularMovies(@Query("api_key") String apiKey);
+    Call<Movie> getPopularMovies(@Query("api_key") String apiKey);
+
+    @GET("movie/top_rated")
+    Call<Movie> getTopRatedMovies(@Query("api_key") String apiKey);
 }
