@@ -2,6 +2,8 @@ package com.pratik.moviesapp.activities;
 
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,8 +21,10 @@ import com.pratik.moviesapp.models.Movie;
 import com.pratik.moviesapp.models.Results;
 import com.pratik.moviesapp.viewmodels.MovieListViewModel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null && savedInstanceState.containsKey("movies")) {
+            popularMovies = new ArrayList<>(Objects.requireNonNull(savedInstanceState.getParcelableArrayList("movies")));
+        }
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         MovieListViewModel movieListViewModel = ViewModelProviders.of(this).get(MovieListViewModel.class);
@@ -53,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     @Override
     public void getPopularMovies(@NonNull Movie movie) {
         popularMovies = Arrays.asList(movie.getResults());
+        loadPopularMoviesList();
     }
 
     @Override
@@ -61,8 +69,13 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     }
 
     @Override
-    public void onError(@NonNull Throwable throwable) {
-        Log.wtf(TAG, throwable.getLocalizedMessage());
+    public void onPopularMoviesError(@NonNull Throwable t) {
+        Log.wtf(TAG, t.getLocalizedMessage());
+    }
+
+    @Override
+    public void onTopRatedMoviesError(@NonNull Throwable t) {
+        Log.wtf(TAG, t.getLocalizedMessage());
     }
 
     @Override
@@ -76,9 +89,6 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.popular:
-                loadPopularMoviesList();
-                return true;
             case R.id.top_rated:
                 loadTopRatedMoviesList();
                 return true;
@@ -106,6 +116,12 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), SPAN_COUNT);
         moviesListRecyclerView.setLayoutManager(layoutManager);
         moviesListRecyclerView.setAdapter(listAdapter);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putParcelableArrayList("movies", (ArrayList<? extends Parcelable>) popularMovies);
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override

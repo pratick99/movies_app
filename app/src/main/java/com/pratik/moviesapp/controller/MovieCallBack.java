@@ -11,5 +11,7 @@ public interface MovieCallBack {
 
     void getTopRateMovies(@NonNull Movie movie);
 
-    void onError(@NonNull Throwable throwable);
+    void onPopularMoviesError(@NonNull Throwable throwable);
+
+    void onTopRatedMoviesError(@NonNull Throwable t);
 }

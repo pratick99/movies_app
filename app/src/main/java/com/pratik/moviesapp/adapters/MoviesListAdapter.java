@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pratik.moviesapp.R;
+import com.pratik.moviesapp.Util;
 import com.pratik.moviesapp.activities.DetailsActivity;
 import com.pratik.moviesapp.models.Movie;
 import com.pratik.moviesapp.models.Results;
@@ -25,7 +26,6 @@ import butterknife.ButterKnife;
 public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder> {
 
     private final List<Results> movies;
-    private static final String IMAGE_URL = " http://image.tmdb.org/t/p/w185/";
     private Context context;
 
     public MoviesListAdapter(final List<Results> popularMovies, final Context appContext) {
@@ -47,7 +47,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
         final Results results = movies.get(position);
         if((results != null)) {
             String path = results.getPoster_path();
-            Picasso.with(context).load(IMAGE_URL+path).into(holder.movieImage);
+            Picasso.with(context).load(Util.IMAGE_URL+path).into(holder.movieImage);
             holder.movieName.setText(results.getOriginal_title());
         }
 
@@ -65,15 +65,15 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
         return movies.size();
     }
 
-    class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class MovieViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.movie_image)
-        ImageView movieImage;
+        public ImageView movieImage;
 
         @BindView(R.id.movie_name)
-        TextView movieName;
+        public TextView movieName;
 
-        MovieViewHolder(View itemView) {
+        public MovieViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

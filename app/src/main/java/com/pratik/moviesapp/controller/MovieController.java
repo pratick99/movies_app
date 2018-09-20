@@ -13,11 +13,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.pratik.moviesapp.Util.API_KEY;
+
 
 public class MovieController {
 
     private static final String TAG = MovieController.class.getSimpleName();
-    private static final String API_KEY ="c948b84bfc921249fca1312ae756d3de";
     private static MovieController movieController =null;
 
     private MovieController() {
@@ -47,7 +48,7 @@ public class MovieController {
             @Override
             public void onFailure(@NonNull Call<Movie> call, @NonNull Throwable t) {
                 if(call.isCanceled()) {
-                    callBack.onError(t);
+                    callBack.onPopularMoviesError(t);
                 }
                 Log.wtf(TAG, t.getLocalizedMessage());
             }
@@ -69,7 +70,7 @@ public class MovieController {
             @Override
             public void onFailure(@NonNull Call<Movie> call, @NonNull Throwable t) {
                 if(call.isCanceled()) {
-                    callBack.onError(t);
+                    callBack.onTopRatedMoviesError(t);
                 }
                 Log.wtf(TAG, t.getLocalizedMessage());
             }
