@@ -41,6 +41,8 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.movie_image_view)
     ImageView movieImage;
 
+    public static final String IMAGE_URL = "http://image.tmdb.org/t/p/w780/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +52,7 @@ public class DetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         Results results = intent.getParcelableExtra("movie");
-        Picasso.with(this).load(Util.IMAGE_URL + results.getPoster_path()).into(movieImage);
+        Picasso.with(this).load(IMAGE_URL + results.getPoster_path()).into(movieImage);
         titleText.setText(results.getOriginal_title());
         movieDescription.setText(results.getOverview());
         userRatings.setText(results.getVote_average());

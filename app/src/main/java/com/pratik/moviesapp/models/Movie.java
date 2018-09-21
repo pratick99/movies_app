@@ -10,44 +10,28 @@ public class Movie {
 
     private String total_results;
 
+    public Movie(Results[] results, String page, String total_pages, String total_results) {
+        this.results = results;
+        this.page = page;
+        this.total_pages = total_pages;
+        this.total_results = total_results;
+    }
+
     public Results[] getResults ()
     {
         return results;
     }
 
-    public void setResults (Results[] results)
-    {
-        this.results = results;
-    }
-
-    public String getPage ()
-    {
+    public String getPage() {
         return page;
     }
 
-    public void setPage (String page)
-    {
-        this.page = page;
-    }
-
-    public String getTotal_pages ()
-    {
+    public String getTotal_pages() {
         return total_pages;
     }
 
-    public void setTotal_pages (String total_pages)
-    {
-        this.total_pages = total_pages;
-    }
-
-    public String getTotal_results ()
-    {
+    public String getTotal_results() {
         return total_results;
-    }
-
-    public void setTotal_results (String total_results)
-    {
-        this.total_results = total_results;
     }
 
     @Override

@@ -33,7 +33,7 @@ public class Results implements Parcelable {
 
     private String popularity;
 
-    Results(Parcel in) {
+    private Results(Parcel in) {
         vote_average = in.readString();
         backdrop_path = in.readString();
         adult = in.readByte() != 0;

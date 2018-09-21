@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.movies_recycler_view)
+    private
     RecyclerView moviesListRecyclerView;
 
     private static final int SPAN_COUNT = 2;

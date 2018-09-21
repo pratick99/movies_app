@@ -13,7 +13,7 @@ import retrofit2.Call;
 
 public class MovieListViewModel extends AndroidViewModel{
 
-    private MovieController movieController;
+    private final MovieController movieController;
 
     public MovieListViewModel(@NonNull Application application) {
         super(application);

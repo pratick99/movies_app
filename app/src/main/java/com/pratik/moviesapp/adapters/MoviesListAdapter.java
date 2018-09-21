@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder> {
 
     private final List<Results> movies;
-    private Context context;
+    private final Context context;
 
     public MoviesListAdapter(final List<Results> popularMovies, final Context appContext) {
         super();
@@ -68,12 +68,12 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
     public class MovieViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.movie_image)
-        public ImageView movieImage;
+        ImageView movieImage;
 
         @BindView(R.id.movie_name)
-        public TextView movieName;
+        TextView movieName;
 
-        public MovieViewHolder(View itemView) {
+        MovieViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
