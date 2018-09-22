@@ -27,7 +27,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
     private final List<Results> movies;
     private static final String IMAGE_URL = " http://image.tmdb.org/t/p/w185/";
     private Context context;
-
+  
     public MoviesListAdapter(final List<Results> popularMovies, final Context appContext) {
         super();
         this.movies = popularMovies;
@@ -66,6 +66,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder {
+
 
         @BindView(R.id.movie_image)
         ImageView movieImage;
