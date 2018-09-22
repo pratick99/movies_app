@@ -13,9 +13,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.pratik.moviesapp.Util.API_KEY;
-
-
 public class MovieController {
 
     private static final String TAG = MovieController.class.getSimpleName();

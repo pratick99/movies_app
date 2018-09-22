@@ -15,13 +15,16 @@ import com.pratik.moviesapp.R;
 import com.pratik.moviesapp.Util;
 import com.pratik.moviesapp.models.Results;
 import com.squareup.picasso.Picasso;
+import android.view.View;
 
+import com.pratik.moviesapp.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailsActivity extends AppCompatActivity {
 
     private static final String TAG = DetailsActivity.class.getSimpleName();
+  
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -43,6 +46,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     public static final String IMAGE_URL = "http://image.tmdb.org/t/p/w780/";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +62,10 @@ public class DetailsActivity extends AppCompatActivity {
         userRatings.setText(results.getVote_average());
         releaseDate.setText(results.getRelease_date());
         Log.i(TAG, results.toString());
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
     }
 
 }

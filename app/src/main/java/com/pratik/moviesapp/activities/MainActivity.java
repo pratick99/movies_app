@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.movies_recycler_view)
-    private
     RecyclerView moviesListRecyclerView;
 
     private static final int SPAN_COUNT = 2;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     public void onTopRatedMoviesError(@NonNull Throwable t) {
         Log.wtf(TAG, t.getLocalizedMessage());
     }
+  
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,6 +92,9 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.popular:
+                loadPopularMoviesList();
+                return true;
             case R.id.top_rated:
                 loadTopRatedMoviesList();
                 return true;
