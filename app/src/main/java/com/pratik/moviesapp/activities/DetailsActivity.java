@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pratik.moviesapp.R;
-import com.pratik.moviesapp.Util;
 import com.pratik.moviesapp.models.Results;
 import com.squareup.picasso.Picasso;
 import android.view.View;
