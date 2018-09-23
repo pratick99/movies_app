@@ -17,6 +17,7 @@ public class MovieController {
 
     private static final String TAG = MovieController.class.getSimpleName();
     private static MovieController movieController =null;
+    private static final String API_KEY = "";
 
     private MovieController() {
         super();
