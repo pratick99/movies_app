@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder> {
 
     private final List<Results> movies;
-    private static final String IMAGE_URL = " http://image.tmdb.org/t/p/w185/";
+    private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w185";
     private Context context;
   
     public MoviesListAdapter(final List<Results> popularMovies, final Context appContext) {
