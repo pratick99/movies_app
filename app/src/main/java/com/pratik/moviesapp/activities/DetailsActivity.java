@@ -2,21 +2,16 @@ package com.pratik.moviesapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pratik.moviesapp.R;
 import com.pratik.moviesapp.models.Results;
 import com.squareup.picasso.Picasso;
-import android.view.View;
 
-import com.pratik.moviesapp.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -62,7 +57,7 @@ public class DetailsActivity extends AppCompatActivity {
         releaseDate.setText(results.getRelease_date());
         Log.i(TAG, results.toString());
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
     }
