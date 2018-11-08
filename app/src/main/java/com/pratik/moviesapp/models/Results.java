@@ -1,8 +1,11 @@
 package com.pratik.moviesapp.models;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+@Entity(tableName = "movie")
 public class Results implements Parcelable {
 
     private String vote_average;
@@ -11,6 +14,7 @@ public class Results implements Parcelable {
 
     private boolean adult;
 
+    @PrimaryKey
     private String id;
 
     private String title;
@@ -33,6 +37,26 @@ public class Results implements Parcelable {
 
     private String popularity;
 
+    //used by room database to store the entries into the table
+    public Results(String vote_average, String backdrop_path, boolean adult, String id, String title,
+                   String overview, String original_language, int[] genre_ids, String release_date,
+                   String original_title, String vote_count, String poster_path, String video,
+                   String popularity) {
+        this.vote_average = vote_average;
+        this.backdrop_path = backdrop_path;
+        this.adult = adult;
+        this.id = id;
+        this.title = title;
+        this.overview = overview;
+        this.original_language = original_language;
+        this.genre_ids = genre_ids;
+        this.release_date = release_date;
+        this.original_title = original_title;
+        this.vote_count = vote_count;
+        this.poster_path = poster_path;
+        this.video = video;
+        this.popularity = popularity;
+    }
 
     protected Results(Parcel in) {
         vote_average = in.readString();

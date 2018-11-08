@@ -1,5 +1,6 @@
 package com.pratik.moviesapp.models;
 
+
 public class Movie {
 
     private Results[] results;
