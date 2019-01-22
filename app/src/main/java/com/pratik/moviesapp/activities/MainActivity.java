@@ -1,50 +1,50 @@
 package com.pratik.moviesapp.activities;
 
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.pratik.moviesapp.R;
 import com.pratik.moviesapp.adapters.MoviesListAdapter;
-import com.pratik.moviesapp.controller.MovieCallBack;
+import com.pratik.moviesapp.injections.InjectionUtil;
 import com.pratik.moviesapp.models.Movie;
 import com.pratik.moviesapp.models.Results;
 import com.pratik.moviesapp.viewmodels.MovieListViewModel;
+import com.pratik.moviesapp.viewmodels.MovieListViewModelFactory;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Arrays;
-import java.util.List;
+
+import javax.xml.transform.Result;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
 
-public class MainActivity extends AppCompatActivity implements MovieCallBack {
+public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.movies_recycler_view)
     RecyclerView moviesListRecyclerView;
 
     private static final int SPAN_COUNT = 2;
-    private Call<Movie> popularMovieCall;
-    private Call<Movie> topRatedMovieCall;
     private List<Results> popularMovies;
-    private List<Results> topRatedMovies;
-    private MoviesListAdapter listAdapter;
+    private MovieListViewModel movieListViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,32 +54,17 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
         }
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        MovieListViewModel movieListViewModel = ViewModelProviders.of(this).get(MovieListViewModel.class);
-        popularMovieCall = movieListViewModel.getPopularMovies(this);
-        topRatedMovieCall = movieListViewModel.getTopRatedMovies(this);
+
     }
 
     @Override
-    public void getPopularMovies(@NonNull Movie movie) {
-        popularMovies = Arrays.asList(movie.getResults());
-        loadPopularMoviesList();
+    protected void onResume() {
+        super.onResume();
+        MovieListViewModelFactory factory = InjectionUtil.getMovieListViewModelFactory(getApplicationContext());
+        movieListViewModel = ViewModelProviders.of(this, factory).get(MovieListViewModel.class);
+        movieListViewModel.syncPopularMovies();
+        movieListViewModel.syncTopRatedMovies();
     }
-
-    @Override
-    public void getTopRateMovies(@NonNull Movie movie) {
-        topRatedMovies = Arrays.asList(movie.getResults());
-    }
-
-    @Override
-    public void onPopularMoviesError(@NonNull Throwable t) {
-        Log.wtf(TAG, t.getLocalizedMessage());
-    }
-
-    @Override
-    public void onTopRatedMoviesError(@NonNull Throwable t) {
-        Log.wtf(TAG, t.getLocalizedMessage());
-    }
-  
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -104,24 +89,29 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     }
 
     private void loadTopRatedMoviesList() {
-        if(topRatedMovies != null) {
-            listAdapter = new MoviesListAdapter(topRatedMovies, getApplicationContext());
-            moviesListRecyclerView.setHasFixedSize(true);
+        Movie popularMovies = movieListViewModel.syncPopularMovies();
+        if(popularMovies != null) {
+            List<Results> results = Arrays.asList(Objects.requireNonNull(popularMovies.getResults()));
+            assignTheDataToAdapter(results);
         }
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), SPAN_COUNT);
-        moviesListRecyclerView.setLayoutManager(layoutManager);
-        moviesListRecyclerView.setAdapter(listAdapter);
     }
 
     private void loadPopularMoviesList() {
-        if(popularMovies != null) {
-            listAdapter = new MoviesListAdapter(popularMovies, getApplicationContext());
-            moviesListRecyclerView.setHasFixedSize(true);
-
+        Movie topRatesMovies = movieListViewModel.syncTopRatedMovies();
+        if(topRatesMovies != null) {
+            List<Results> results = Arrays.asList(Objects.requireNonNull(topRatesMovies.getResults()));
+            assignTheDataToAdapter(results);
         }
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), SPAN_COUNT);
-        moviesListRecyclerView.setLayoutManager(layoutManager);
-        moviesListRecyclerView.setAdapter(listAdapter);
+    }
+
+    private void assignTheDataToAdapter(List<Results> results) {
+        MoviesListAdapter listAdapter = new MoviesListAdapter(results, getApplicationContext());
+        if(moviesListRecyclerView != null) {
+            moviesListRecyclerView.setHasFixedSize(true);
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), SPAN_COUNT);
+            moviesListRecyclerView.setLayoutManager(layoutManager);
+            moviesListRecyclerView.setAdapter(listAdapter);
+        }
     }
 
     @Override
@@ -130,10 +120,4 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        popularMovieCall.cancel();
-        topRatedMovieCall.cancel();
-    }
 }

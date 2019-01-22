@@ -1,19 +1,25 @@
 package com.pratik.moviesapp.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pratik.moviesapp.R;
+import com.pratik.moviesapp.injections.InjectionUtil;
 import com.pratik.moviesapp.models.Results;
+import com.pratik.moviesapp.viewmodels.MovieDetailViewModelFactory;
+import com.pratik.moviesapp.viewmodels.MovieDetailsViewModel;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -38,7 +44,14 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.movie_image_view)
     ImageView movieImage;
 
-    public static final String IMAGE_URL = "http://image.tmdb.org/t/p/w780/";
+    @BindView(R.id.reviewsList)
+    RecyclerView reviewsLists;
+
+    @BindView(R.id.trailersList)
+    RecyclerView trailersList;
+
+    private static final String IMAGE_URL = "http://image.tmdb.org/t/p/w780/";
+    private MovieDetailsViewModel movieDetailsViewModel;
 
 
     @Override
@@ -62,4 +75,16 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MovieDetailViewModelFactory factory = InjectionUtil.geMovieDetailViewModelFactory(getApplicationContext());
+        movieDetailsViewModel = ViewModelProviders.of(this, factory).get(MovieDetailsViewModel.class);
+    }
+
+    @OnClick(R.id.save_as_favorite)
+    public void saveAsFavorite() {
+
+    }
 }
