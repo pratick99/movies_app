@@ -12,6 +12,9 @@ import com.pratik.moviesapp.viewmodels.MovieRepository;
 
 import java.util.List;
 
+/**
+ * @author pratik-personal
+ */
 public class InjectionUtil {
 
     public static MovieListViewModelFactory getMovieListViewModelFactory(final Context context) {

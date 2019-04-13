@@ -12,6 +12,9 @@ import com.pratik.moviesapp.models.Results;
 
 import java.io.IOException;
 
+/**
+ * @author pratik-personal
+ */
 public class MovieRepository {
 
     private final static String LOG_TAG = MovieRepository.class.getSimpleName();

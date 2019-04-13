@@ -1,11 +1,9 @@
 package com.pratik.moviesapp.activities;
 
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,22 +20,19 @@ import com.pratik.moviesapp.models.Results;
 import com.pratik.moviesapp.viewmodels.MovieListViewModel;
 import com.pratik.moviesapp.viewmodels.MovieListViewModelFactory;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import javax.xml.transform.Result;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author pratik-personal
+ */
 public class MainActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    // --Commented out by Inspection (4/13/19, 7:33 PM):private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.movies_recycler_view)
     RecyclerView moviesListRecyclerView;

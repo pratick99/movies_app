@@ -6,6 +6,9 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class AppExecutors {
 
@@ -22,7 +25,7 @@ public class AppExecutors {
 
     public AppExecutors getInstance() {
         if(appExecutors == null) {
-            appExecutors = new AppExecutors(Executors.newSingleThreadExecutor(), new MainThreadHandler(),
+            appExecutors = new AppExecutors(new ThreadPoolExecutor(1,3,30_000, TimeUnit.SECONDS, new LinkedBlockingDeque<>(3)), new MainThreadHandler(),
                     Executors.newFixedThreadPool(3));
         }
         return appExecutors;

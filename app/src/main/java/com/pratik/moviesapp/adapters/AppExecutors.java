@@ -5,8 +5,15 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
 
+/**
+ * @author pratik-personal
+ */
 public class AppExecutors {
 
     private Executor diskIO;
@@ -22,8 +29,8 @@ public class AppExecutors {
 
     public static AppExecutors getInstance() {
         if (appExecutors == null) {
-            appExecutors = new AppExecutors(Executors.newSingleThreadExecutor(),
-                    Executors.newFixedThreadPool(3),
+            appExecutors = new AppExecutors(new ThreadPoolExecutor(3,10,0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(10)),
+                    new ThreadPoolExecutor(5, 10, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(100)),
                     new MainThreadExecutor());
         }
         return appExecutors;

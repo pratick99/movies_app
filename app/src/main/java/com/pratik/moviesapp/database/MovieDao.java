@@ -8,6 +8,9 @@ import android.arch.persistence.room.Query;
 
 import com.pratik.moviesapp.models.Results;
 
+/**
+ * @author Pratik Desai
+ */
 @Dao
 public interface MovieDao {
 
