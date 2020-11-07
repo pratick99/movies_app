@@ -2,8 +2,8 @@ package com.pratik.moviesapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,7 +50,7 @@ public class DetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         Results results = intent.getParcelableExtra("movie");
-        Picasso.with(this).load(IMAGE_URL + results.getPoster_path()).into(movieImage);
+        Picasso.get().load(IMAGE_URL + results.getPoster_path()).into(movieImage);
         titleText.setText(results.getOriginal_title());
         movieDescription.setText(results.getOverview());
         userRatings.setText(results.getVote_average());

@@ -1,18 +1,19 @@
 package com.pratik.moviesapp.activities;
 
 
-import android.arch.lifecycle.ViewModelProviders;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.pratik.moviesapp.R;
 import com.pratik.moviesapp.adapters.MoviesListAdapter;
@@ -21,12 +22,12 @@ import com.pratik.moviesapp.models.Movie;
 import com.pratik.moviesapp.models.Results;
 import com.pratik.moviesapp.viewmodels.MovieListViewModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,11 +36,9 @@ import retrofit2.Call;
 public class MainActivity extends AppCompatActivity implements MovieCallBack {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
+    private static final int SPAN_COUNT = 2;
     @BindView(R.id.movies_recycler_view)
     RecyclerView moviesListRecyclerView;
-
-    private static final int SPAN_COUNT = 2;
     private Call<Movie> popularMovieCall;
     private Call<Movie> topRatedMovieCall;
     private List<Results> popularMovies;
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState != null && savedInstanceState.containsKey("movies")) {
+        if (savedInstanceState != null && savedInstanceState.containsKey("movies")) {
             popularMovies = new ArrayList<>(Objects.requireNonNull(savedInstanceState.getParcelableArrayList("movies")));
         }
         setContentView(R.layout.activity_main);
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     public void onTopRatedMoviesError(@NonNull Throwable t) {
         Log.wtf(TAG, t.getLocalizedMessage());
     }
-  
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -89,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
+    
         switch (item.getItemId()) {
             case R.id.popular:
                 loadPopularMoviesList();
@@ -104,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     }
 
     private void loadTopRatedMoviesList() {
-        if(topRatedMovies != null) {
+        if (topRatedMovies != null) {
             listAdapter = new MoviesListAdapter(topRatedMovies, getApplicationContext());
             moviesListRecyclerView.setHasFixedSize(true);
         }
@@ -114,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements MovieCallBack {
     }
 
     private void loadPopularMoviesList() {
-        if(popularMovies != null) {
+        if (popularMovies != null) {
             listAdapter = new MoviesListAdapter(popularMovies, getApplicationContext());
             moviesListRecyclerView.setHasFixedSize(true);
 
